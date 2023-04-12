@@ -2,6 +2,7 @@
 
 # import modules - always before the code (at the top)
 import argparse
+import csv
 
 # create ArgumentParser object - description calls for an output when help is called
 parser = argparse.ArgumentParser(description='This script parses a GFF file')
@@ -36,37 +37,40 @@ args = parser.parse_args()
 # ---- CLASS VERSION
 
 #open the GFF file (with function automatically closes the file and the lines become a list)
-with open (args.gff_file) as beyonce:
+with open (args.gff_file) as gff_file:
 
-#loop over all the lines in the file
- 	for line in beyonce:
+	# create a csv reader object
+	reader = csv.reader(gff_file, delimiter = '\t')
+
+	#loop over all the lines in the file
+	for line in reader:
  			
  		#skip blank lines
- 		if not line.strip():
+ 		if not line:
  			continue #this take us to the next line
  		
  		#else it's not a blank line
- 		else: 		
- 			line = line.strip() #remove the line breaks
- 		
+ 		else: 	
+ 			#print(line)	
+ 			#line = line.strip() #remove the line breaks
  			#split line on tab character
- 			columns = line.split('\t')
+ 			#columns = line.split('\t')
 			# print(line)
 		
 			#give variable names to the column
- 			organism = columns[0]
- 			source = columns[1]
- 			feature_type = columns[2]
- 			start = columns[3]
- 			end = columns[4]
- 			length = columns[5]
- 			strand = columns[6]
- 			attributes = columns[8]
+ 			organism = line[0]
+ 			source = line[1]
+ 			feature_type = line[2]
+ 			start = int(line[3])
+ 			end = int(line[4])
+ 			length = line[5]
+ 			strand = line[6]
+ 			attributes = line[8]
  			
  			#add the length to column 5
- 			columns[5] = str(int(end) - int(start) + 1)
+ 			line[5] = str(int(end) - int(start) + 1) 
  			
- 			new_line = '\t'.join(columns)
+ 			new_line = '\t'.join(line)
 
  			print(new_line)
  
