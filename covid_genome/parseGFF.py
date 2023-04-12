@@ -9,17 +9,25 @@ parser = argparse.ArgumentParser(description='This script parses a GFF file')
 # add positional (required) arguments; when running the ./file -h the -h will display this message saying how the argument was positioned
 
 # add positional arguments
-parser.add_argument('gff', help = 'The name of GFF file to parse', type= str)
+parser.add_argument('gff_file', help = 'The name of GFF file to parse', type= str)
 parser.add_argument('fasta', help = 'The name of FASTA file to parse', type= str)
 
 # parse the actual arguments
 # access argument values via 'args' variable
 args = parser.parse_args()
-
-# What I really need here 
-
-#Read the gff file):
-with open(args.gff) as x:
-	for line in x: # loop over all the lines in the file
-		print(line)
 	
+#reading the file
+GFF_file = open(args.gff_file, 'r')
+GFF_lines = GFF_file.readlines()
+GFF_file.close()
+GFF_lines.remove(GFF_lines[-1])
+
+# GFF_lines2 = []
+for line in GFF_lines:
+    # print(line)
+    stripped_line = line.strip()
+    stripped_line2 = stripped_line.split('\t')
+    print(stripped_line2[2] + '\t' + stripped_line2[4])
+    
+    
+    
