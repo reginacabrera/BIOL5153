@@ -24,10 +24,10 @@ GFF_lines.remove(GFF_lines[-1])
 
 # GFF_lines2 = []
 for line in GFF_lines:
-    # print(line)
     stripped_line = line.strip()
     stripped_line2 = stripped_line.split('\t')
-    print(stripped_line2[2] + '\t' + stripped_line2[4])
+    length = (int(stripped_line2[4]) - int(stripped_line2[3]) + 1)
+    print(stripped_line2[2] + '\t' + str(length))
     
     
     
